@@ -1,6 +1,9 @@
 package grid
 
-import "fmt"
+import (
+	"fmt"
+	"math/rand"
+)
 
 type Grid struct {
 	Width  int
@@ -16,7 +19,7 @@ type Pair[A, B int] struct {
 	Second B
 }
 
-func NewGrid(width, height int) *Grid {
+func newGrid(width, height int) *Grid {
 
 	g := &Grid{
 		width, height,
@@ -53,6 +56,7 @@ func (g *Grid) GetNeighbours(x,y int) []Pair[int, int] {
 }
 
 func (g *Grid) PrintGrid() {
+	fmt.Println("Grid: start: ", g.Start, " end: ", g.End)
 	for i:=0; i<g.Height; i++ {
 		for j:=0; j<g.Width; j++ {
 			fmt.Printf("%f ",g.state[i][j])
@@ -69,6 +73,25 @@ func (g *Grid) SetEnd(x, y int) {
 	g.End = Pair[int, int]{x, y}
 }
 
-func (g *Grid) Obstacles(x, y int) {
+func (g *Grid) SetObstacle(x, y int) {
 	g.state[y][x] = -1
+}
+
+func CreateGridWithObstacles(width, height, obstacleCount int) *Grid {
+	g := newGrid(width, height)
+	for range obstacleCount {
+		x := rand.Intn(width)
+		y := rand.Intn(height)
+		g.SetObstacle(x, y)
+	}
+
+	g.SetStart(0, 0)
+	if g.state[0][0] == -1 {
+		g.state[0][0] = 0
+	}
+	g.SetEnd(width-1, height-1)
+	if g.state[height-1][width-1] == -1 {
+		g.state[height-1][width-1] = 0
+	}
+	return g
 }

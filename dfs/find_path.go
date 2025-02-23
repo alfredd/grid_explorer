@@ -3,6 +3,6 @@ package main
 import  "github.com/alfredd/grid_explorer/grid"
 
 func main() {
-	g := grid.NewGrid(5, 5)
+	g := grid.CreateGridWithObstacles(10,10,20)
 	g.PrintGrid()
 }
