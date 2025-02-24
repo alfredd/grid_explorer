@@ -11,10 +11,6 @@ type Node struct {
 	parent *Node
 }
 
-func bfs(g *grid.Grid) {
-	
-}
-
 func shortest_path(g *grid.Grid) {
 	explored := make(map[grid.Pair[int, int]]bool)
 	queue := []Node{}
