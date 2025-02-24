@@ -59,8 +59,8 @@ func (g *Grid) GetStart() Pair[int, int] {
 
 func (g *Grid) PrintGrid() {
 	fmt.Println("Grid: start: ", g.Start, " end: ", g.End)
-	for i := 0; i < g.Height; i++ {
-		for j := 0; j < g.Width; j++ {
+	for i := range g.Height {
+		for j := range g.Width {
 			fmt.Printf("({%d, %d} %f ) ", i, j, g.state[i][j])
 		}
 		fmt.Println()
