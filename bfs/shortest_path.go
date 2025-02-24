@@ -8,7 +8,7 @@ import (
 
 type Node struct {
 	current grid.Pair[int, int]
-	parent *Node
+	parent  *Node
 }
 
 func shortest_path(g *grid.Grid) {
@@ -19,17 +19,17 @@ func shortest_path(g *grid.Grid) {
 	explored[start.current] = true
 	var path Node
 	for len(queue) > 0 {
-		v:=queue[0]
+		v := queue[0]
 		queue = queue[1:]
 		if g.IsEnd(v.current.First, v.current.Second) {
 			path = v
 			break
 		}
-		for _, n:= range g.GetNeighbours(v.current.First, v.current.Second) {
+		for _, n := range g.GetNeighbours(v.current.First, v.current.Second) {
 			if _, ok := explored[n]; !ok {
 				explored[n] = true
 				queue = append(queue, Node{n, &v})
-				
+
 			}
 		}
 	}
@@ -39,7 +39,7 @@ func shortest_path(g *grid.Grid) {
 		path = *path.parent
 	}
 	fmt.Println(path.current)
-	
+
 }
 
 func main() {
