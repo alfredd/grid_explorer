@@ -34,25 +34,22 @@ func newGrid(width, height int) *Grid {
 }
 
 func (g *Grid) GetNeighbours(x, y int) []Pair[int, int] {
-	// TODO: implement algorithm to get surrounding neighbours
-	// cx, cy:=x,y
+	cx, cy := x-1, y-1
 	neighbours := []Pair[int, int]{}
-	if x-1 < 0 {
-		x = 1
+	for i := cx; i < cx+3; i++ {
+		for j := cy; j < cy+3; j++ {
+			if i < 0 || j < 0 || i >= g.Width || j >= g.Height {
+				continue
+			}
+			if i == x && j == y {
+				continue
+			}
+			if g.state[j][i] >= 0 {
+				neighbours = append(neighbours, Pair[int, int]{i, j})
+			}
+
+		}
 	}
-	if y-1 < 0 {
-		y = 1
-	}
-	if x+1 >= g.Width {
-		x = g.Width - 2
-	}
-	if y+1 >= g.Height {
-		y = g.Height - 2
-	}
-	neighbours = append(neighbours, Pair[int, int]{x - 1, y})
-	neighbours = append(neighbours, Pair[int, int]{x + 1, y})
-	neighbours = append(neighbours, Pair[int, int]{x, y - 1})
-	neighbours = append(neighbours, Pair[int, int]{x, y + 1})
 	return neighbours
 }
 
@@ -64,7 +61,7 @@ func (g *Grid) PrintGrid() {
 	fmt.Println("Grid: start: ", g.Start, " end: ", g.End)
 	for i := 0; i < g.Height; i++ {
 		for j := 0; j < g.Width; j++ {
-			fmt.Printf("%f ", g.state[i][j])
+			fmt.Printf("({%d, %d} %f ) ", i, j, g.state[i][j])
 		}
 		fmt.Println()
 	}
